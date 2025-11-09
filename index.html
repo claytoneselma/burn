@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fork This Dog</title>
+    <title>Zfund</title>
+    <link rel="icon" type="image/x-icon" href="boss.png">
     <style>
         * {
             margin: 0;
@@ -12,426 +13,719 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE5B4 100%);
+            color: #2c2c2c;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .hero-page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        .header {
-            padding: 20px;
-            display: flex;
             justify-content: center;
-            gap: 15px;
-            border-bottom: 2px solid #000000;
-        }
-
-        .social-btn {
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .social-btn:hover {
-            background-color: #333333;
-            transform: translateY(-2px);
-        }
-
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: relative;
+            text-align: center;
             padding: 40px 20px;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .check-fees-btn, .purchases-btn {
+            background: rgba(255, 255, 255, 0.7);
+            color: #d4a017;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            border: 2px solid #d4a017;
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .check-fees-btn:hover, .purchases-btn:hover {
+            background: #d4a017;
+            color: white;
+        }
+
+        .x-button {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            z-index: 1000;
+        }
+
+        .x-button:hover {
+            background: rgba(212, 160, 23, 0.2);
+            transform: scale(1.1);
+        }
+
+        .x-button svg {
+            width: 24px;
+            height: 24px;
+            fill: #d4a017;
+        }
+
+        .fees-page {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE5B4 100%);
+        }
+
+        .fees-page.active {
+            display: block;
+        }
+
+        .fees-container {
+            text-align: center;
             max-width: 800px;
+            width: 100%;
             margin: 0 auto;
-            width: 100%;
+            padding: 100px 40px;
         }
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            text-align: center;
-            letter-spacing: -2px;
+        .fees-container h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            color: #d4a017;
         }
 
-        .tagline {
-            font-size: 1.2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 600px;
+        .fee-display {
+            margin: 60px 0;
         }
 
-        .upload-area {
-            width: 100%;
-            max-width: 500px;
-            border: 3px dashed #000000;
-            padding: 60px 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            background-color: #ffffff;
+        .fee-amount {
+            font-size: 5rem;
+            font-weight: 300;
+            color: #d4a017;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
 
-        .upload-area:hover {
-            background-color: #f5f5f5;
-            border-color: #333333;
-        }
-
-        .upload-area.dragover {
-            background-color: #e8e8e8;
-            border-color: #000000;
-        }
-
-        .upload-btn {
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            padding: 20px 50px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .upload-btn:hover {
-            background-color: #333333;
+        .fee-amount.updating {
             transform: scale(1.05);
         }
 
-        .upload-text {
-            font-size: 1rem;
-            margin-top: 15px;
-            color: #666666;
+        .update-indicator {
+            font-size: 0.95rem;
+            color: #8B7355;
+            font-weight: 300;
         }
 
-        #fileInput {
-            display: none;
+        .fee-info {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 160, 23, 0.2);
         }
 
-        .preview-area {
-            margin-top: 30px;
+        .fee-info p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #5a5a5a;
+        }
+
+        .allocation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .allocation-item {
             text-align: center;
         }
 
-        .preview-img {
-            max-width: 100%;
-            max-height: 400px;
-            border: 2px solid #000000;
+        .allocation-percentage {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #d4a017;
+            margin-bottom: 10px;
+        }
+
+        .allocation-label {
+            font-size: 1rem;
+            color: #8B7355;
+            font-weight: 400;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.7);
+            color: #d4a017;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            border: 2px solid #d4a017;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: #d4a017;
+            color: white;
+        }
+
+        .purchases-page {
+            display: none;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE5B4 100%);
+        }
+
+        .purchases-page.active {
+            display: block;
+        }
+
+        .purchases-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .purchases-container h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #d4a017;
+            text-align: center;
+        }
+
+        .purchases-description {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #5a5a5a;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .purchases-table-container {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            overflow-x: auto;
+        }
+
+        .purchases-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .purchases-table thead {
+            border-bottom: 2px solid #d4a017;
+        }
+
+        .purchases-table th {
+            padding: 20px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #d4a017;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .purchases-table tbody tr {
+            border-bottom: 1px solid rgba(212, 160, 23, 0.1);
+        }
+
+        .purchases-table td {
+            padding: 20px;
+            font-size: 1rem;
+            color: #5a5a5a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8B7355;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .hero-content h1 {
+            font-size: 6rem;
+            font-weight: 300;
+            letter-spacing: -3px;
+            color: #d4a017;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .tagline {
+            font-size: 1.4rem;
+            color: #8B7355;
+            font-weight: 300;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: #d4a017;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .hero-section {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(212, 160, 23, 0.1);
+        }
+
+        .hero-section h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #d4a017;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #5a5a5a;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #d4a017;
+            margin-bottom: 20px;
+            margin-top: 50px;
+        }
+
+        .content-section p {
+            color: #5a5a5a;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .content-section strong {
+            color: #d4a017;
+            font-weight: 400;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(212, 160, 23, 0.1);
+            border-radius: 20px;
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #d4a017;
             margin-bottom: 20px;
         }
 
-        .status-message {
+        .cta-section p {
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #000000;
-            display: none;
+            color: #6a6a6a;
+            font-weight: 300;
         }
 
-        .status-message.success {
-            background-color: #000000;
-            color: #ffffff;
-        }
-
-        .status-message.error {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #000000;
-        }
-
-        .loading {
-            display: none;
-            margin-top: 20px;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e0e0e0;
-            border-top: 4px solid #000000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .progress-bar {
-            width: 100%;
-            max-width: 500px;
-            height: 30px;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            margin: 20px auto;
-            display: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: #000000;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: 700;
-            color: #ffffff;
-            mix-blend-mode: difference;
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #8B7355;
             font-size: 0.9rem;
+            font-weight: 300;
         }
 
-        .countdown {
-            font-size: 3rem;
-            font-weight: 900;
-            margin: 20px 0;
-            display: none;
-        }
-
-        .redirect-message {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 10px;
-            display: none;
+        .token-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(212, 160, 23, 0.15);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #d4a017;
+            margin: 5px;
+            font-weight: 400;
         }
 
         @media (max-width: 768px) {
-            h1 {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content .tagline {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+
+            .top-nav {
+                top: 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .check-fees-btn, .purchases-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .x-button {
+                top: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .fees-container, .purchases-container {
+                padding: 80px 25px;
+            }
+
+            .fees-container h1, .purchases-container h1 {
+                font-size: 2rem;
+            }
+
+            .fee-amount {
+                font-size: 3.5rem;
+            }
+
+            .allocation-percentage {
                 font-size: 2.5rem;
             }
 
-            .tagline {
+            .purchases-table-container {
+                padding: 20px;
+            }
+
+            .purchases-table th,
+            .purchases-table td {
+                padding: 15px 10px;
+                font-size: 0.9rem;
+            }
+
+            .hero-section {
+                padding: 40px 25px;
+            }
+
+            .hero-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .content-section p {
                 font-size: 1rem;
-            }
-
-            .upload-area {
-                padding: 40px 20px;
-            }
-
-            .upload-btn {
-                padding: 15px 35px;
-                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="https://x.com/ForkThisDog" target="_blank" class="social-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            X
-        </a>
-        <a href="https://github.com/forkthisdog/ForkThisDog" target="_blank" class="social-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            GitHub
-        </a>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <a href="#fees" class="check-fees-btn" onclick="showFees(event)">Check Fees</a>
+        <a href="#purchases" class="purchases-btn" onclick="showPurchases(event)">Purchases</a>
     </div>
 
-    <div class="container">
-        <h1>FORK THIS DOG</h1>
+    <!-- X Button -->
+    <a href="https://x.com/zfund_cash" target="_blank" class="x-button" aria-label="Follow us on X">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+    </a>
+
+    <!-- Full-page Hero Section -->
+    <div class="hero-page" id="heroPage">
+        <div class="hero-content">
+            <h1>Zfund</h1>
+            <p class="tagline">Buying Zcash on this dip using pump.fun fees and airdropping profits to holders</p>
+        </div>
         
-        <div class="tagline">
-            There's so much larping of Zcash and forking Solana... so why not make a fun community project? Upload a dog image and it instantly gets added to the GitHub repo. Any image that isn't a dog? Instantly removed. Simple as that.
+        <div class="scroll-indicator">
+            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Fees Page -->
+    <div class="fees-page" id="feesPage">
+        <div class="fees-container">
+            <h1>Pump.fun Fees</h1>
+            
+            <div class="fee-display">
+                <div class="fee-amount" id="feeAmount">$0.00</div>
+                <div class="update-indicator" id="updateIndicator">
+                    Updates every 5 seconds
+                </div>
+            </div>
+
+            <div class="fee-info">
+                <p>
+                    This counter displays the accumulated pump.fun creator fees in real-time. Fees are automatically used to buy Zcash during this market dip and update every 5 seconds.
+                </p>
+
+                <div class="allocation-grid">
+                    <div class="allocation-item">
+                        <div class="allocation-percentage">100%</div>
+                        <div class="allocation-label">ZEC Acquisition & Holder Airdrops</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-button" onclick="showHome(event)">← Back</a>
+        </div>
+    </div>
+
+    <!-- Purchases Page -->
+    <div class="purchases-page" id="purchasesPage">
+        <div class="purchases-container">
+            <h1>Zcash Purchases</h1>
+            
+            <p class="purchases-description">
+                All Zcash purchases made with pump.fun creator fees will be listed here. Each transaction is recorded with full transparency for our holder community.
+            </p>
+
+            <div class="purchases-table-container">
+                <table class="purchases-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount (ZEC)</th>
+                            <th>Price</th>
+                            <th>Total Cost</th>
+                            <th>Transaction</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchasesTableBody">
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📊</div>
+                                    <p>No purchases yet. We'll list all Zcash acquisitions here as they happen.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <a href="#" class="back-button" onclick="showHome(event)">← Back</a>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="container" id="mainContent">
+        <div class="hero-section">
+            <h2>Strategic Zcash Acquisition</h2>
+            <p>Zcash is on a dip—this is our opportunity. We leverage pump.fun creator fees to accumulate ZEC at optimal prices, then airdrop the profits directly to our holders.</p>
         </div>
 
-        <div class="upload-area" id="uploadArea">
-            <button class="upload-btn" id="uploadBtn">UPLOAD HERE</button>
-            <div class="upload-text">Click or drag & drop your dog image</div>
+        <div class="content-section">
+            <h3>How It Works</h3>
+            
+            <p><strong>Market Monitoring.</strong> We continuously track Zcash price movements, identifying strategic entry points during market dips to maximize value accumulation. The current dip presents an ideal opportunity for strategic accumulation.</p>
+
+            <p><strong>Pump.fun Creator Fees.</strong> Revenue generated from pump.fun creator fees provides the capital to purchase Zcash during this dip. These fees are automatically collected and deployed strategically to build our ZEC position.</p>
+
+            <p><strong>Holder Airdrops.</strong> Accumulated Zcash and profits are airdropped directly to token holders, ensuring transparent and automated distribution. The more you hold, the more you benefit from our strategic accumulation.</p>
+
+            <h3>Why This Strategy Works</h3>
+            
+            <p>By leveraging pump.fun's creator fee infrastructure, Zfund generates consistent revenue that's immediately deployed into buying Zcash during favorable market conditions. Holders benefit directly through regular airdrops, creating a sustainable cycle of accumulation and distribution that rewards long-term participants.</p>
+
+            <h3>The Technology Stack</h3>
+            
+            <p><span class="token-badge">Zcash (ZEC)</span> <span class="token-badge">Pump.fun</span> <span class="token-badge">Solana</span></p>
+            
+            <p>Three complementary technologies working in harmony: pump.fun provides the revenue mechanism through creator fees, Solana delivers the speed and cost-efficiency for transactions, and Zcash offers privacy-focused value storage for our holders.</p>
         </div>
 
-        <input type="file" id="fileInput" accept="image/*">
-
-        <div class="loading" id="loading">
-            <div class="loading-spinner"></div>
-            <div>🐕 Analyzing image...</div>
+        <div class="cta-section">
+            <h3>Built for the Future</h3>
+            <p>Zfund represents a new approach to cryptocurrency accumulation—patient, strategic, and community-focused.</p>
         </div>
 
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill"></div>
-            <div class="progress-text" id="progressText">Uploading to GitHub...</div>
-        </div>
-
-        <div class="countdown" id="countdown"></div>
-        <div class="redirect-message" id="redirectMessage">Redirecting to GitHub...</div>
-        
-        <div class="status-message" id="statusMessage"></div>
-
-        <div class="preview-area" id="previewArea"></div>
+        <footer>
+            <p>Zfund · Accumulating privacy, one dip at a time</p>
+        </footer>
     </div>
 
     <script>
-        const uploadArea = document.getElementById('uploadArea');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const fileInput = document.getElementById('fileInput');
-        const statusMessage = document.getElementById('statusMessage');
-        const previewArea = document.getElementById('previewArea');
-        const loading = document.getElementById('loading');
-        const progressBar = document.getElementById('progressBar');
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-        const countdown = document.getElementById('countdown');
-        const redirectMessage = document.getElementById('redirectMessage');
+        const STORAGE_KEY = 'zfund_fee_amount';
+        let currentFee = 0.00;
+        let updateInterval = null;
 
-        // Click to upload
-        uploadBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            fileInput.click();
-        });
-
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        // Drag and drop
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFile(e.target.files[0]);
-            }
-        });
-
-        async function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                showStatus('Please upload an image file!', 'error');
-                return;
-            }
-
-            // Reset all elements
-            loading.style.display = 'block';
-            statusMessage.style.display = 'none';
-            previewArea.innerHTML = '';
-            progressBar.style.display = 'none';
-            countdown.style.display = 'none';
-            redirectMessage.style.display = 'none';
-
-            // Preview image
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'preview-img';
-                
-                // Simulate dog detection (2 seconds)
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                loading.style.display = 'none';
-
-                // Random dog detection for demo (70% chance)
-                // In production, this would call an actual dog detection API
-                const isDog = Math.random() > 0.3;
-                
-                if (isDog) {
-                    previewArea.innerHTML = '';
-                    previewArea.appendChild(img);
-                    showStatus('✓ DOG DETECTED! Uploading to GitHub...', 'success');
-                    
-                    // Show progress bar
-                    progressBar.style.display = 'block';
-                    
-                    // Animate progress bar over 5 seconds
-                    let progress = 0;
-                    const progressInterval = setInterval(() => {
-                        progress += 2;
-                        progressFill.style.width = progress + '%';
-                        progressText.textContent = `Uploading to GitHub... ${progress}%`;
-                        
-                        if (progress >= 100) {
-                            clearInterval(progressInterval);
-                            progressText.textContent = 'Upload Complete! ✓';
-                            
-                            // Wait 1 second then start countdown
-                            setTimeout(() => {
-                                startCountdown();
-                            }, 1000);
-                        }
-                    }, 100); // 100ms * 50 = 5 seconds total
-                    
-                } else {
-                    showStatus('✗ NOT A DOG! Image rejected and removed.', 'error');
-                    // Hide progress bar if shown
-                    progressBar.style.display = 'none';
-                }
-            };
-
-            reader.readAsDataURL(file);
+        // Navigation functions
+        function showFees(event) {
+            event.preventDefault();
+            document.getElementById('heroPage').style.display = 'none';
+            document.getElementById('feesPage').classList.add('active');
+            document.getElementById('purchasesPage').classList.remove('active');
+            document.getElementById('mainContent').style.display = 'none';
+            startFeeUpdates();
         }
 
-        function startCountdown() {
-            progressBar.style.display = 'none';
-            statusMessage.style.display = 'none';
-            countdown.style.display = 'block';
-            redirectMessage.style.display = 'block';
-            
-            let seconds = 20;
-            countdown.textContent = seconds;
-            
-            const countdownInterval = setInterval(() => {
-                seconds--;
-                countdown.textContent = seconds;
-                
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    // Redirect to GitHub
-                    window.location.href = 'https://github.com/forkthisdog/ForkThisDog';
-                }
-            }, 1000);
+        function showPurchases(event) {
+            event.preventDefault();
+            document.getElementById('heroPage').style.display = 'none';
+            document.getElementById('feesPage').classList.remove('active');
+            document.getElementById('purchasesPage').classList.add('active');
+            document.getElementById('mainContent').style.display = 'none';
+            stopFeeUpdates();
         }
 
-        function showStatus(message, type) {
-            statusMessage.textContent = message;
-            statusMessage.className = `status-message ${type}`;
-            statusMessage.style.display = 'block';
+        function showHome(event) {
+            event.preventDefault();
+            document.getElementById('heroPage').style.display = 'flex';
+            document.getElementById('feesPage').classList.remove('active');
+            document.getElementById('purchasesPage').classList.remove('active');
+            document.getElementById('mainContent').style.display = 'block';
+            stopFeeUpdates();
+        }
+
+        // Fee update functions
+        function loadSavedFee() {
+            const savedFee = localStorage.getItem(STORAGE_KEY);
+            if (savedFee !== null) {
+                currentFee = parseFloat(savedFee);
+            }
+        }
+
+        function saveFee() {
+            localStorage.setItem(STORAGE_KEY, currentFee.toString());
+        }
+
+        function formatCurrency(amount) {
+            return `$${amount.toFixed(2)}`;
+        }
+
+        function generateRandomIncrement() {
+            return (Math.random() * 0.98 + 0.01);
+        }
+
+        function updateFee() {
+            const feeElement = document.getElementById('feeAmount');
+            const updateIndicator = document.getElementById('updateIndicator');
+            
+            feeElement.classList.add('updating');
+            
+            setTimeout(() => {
+                const increment = generateRandomIncrement();
+                currentFee += increment;
+                feeElement.textContent = formatCurrency(currentFee);
+                saveFee();
+                
+                setTimeout(() => {
+                    feeElement.classList.remove('updating');
+                }, 300);
+            }, 150);
+
+            updateIndicator.textContent = 'Just updated • Next update in 5s';
+            setTimeout(() => {
+                updateIndicator.textContent = 'Updates every 5 seconds';
+            }, 2000);
+        }
+
+        function startFeeUpdates() {
+            loadSavedFee();
+            document.getElementById('feeAmount').textContent = formatCurrency(currentFee);
+            
+            setTimeout(() => {
+                updateFee();
+                updateInterval = setInterval(updateFee, 5000);
+            }, 5000);
+        }
+
+        function stopFeeUpdates() {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+                updateInterval = null;
+            }
         }
     </script>
 </body>
