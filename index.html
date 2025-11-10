@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banana Supply</title>
-    <link rel="icon" type="image/x-icon" href="banana.png">
+    <title>XChan</title>
+    <link rel="icon" type="image/x-icon" href="king.jpg">
     <style>
         * {
             margin: 0;
@@ -13,379 +13,608 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fffef0;
-            color: #2a2a2a;
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            padding: 2rem;
         }
 
-        .header {
+        .button-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 3rem;
-            border-bottom: 1px solid #ffe680;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2a2a2a;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .x-button {
-            background: none;
-            border: 1px solid #e0e0e0;
-            border-radius: 50%;
-            padding: 0.5rem;
-            width: 36px;
-            height: 36px;
+        .button {
+            padding: 1.2rem 2.5rem;
+            background: transparent;
+            color: #000000;
+            border: 2px solid #000000;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
-        .x-button:hover {
-            border-color: #ffd60a;
-            background: #fffef0;
-        }
-
-        .x-button svg {
-            width: 18px;
-            height: 18px;
-            fill: #2a2a2a;
+        .button:hover {
+            background: #000000;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .fee-display {
+            max-width: 800px;
+            width: 100%;
             text-align: center;
-            margin-bottom: 4rem;
         }
 
-        .fee-amount {
-            font-size: 5rem;
-            font-weight: 700;
-            color: #2a2a2a;
-            margin-bottom: 0.5rem;
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: #000000;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            vertical-align: middle;
         }
 
-        .fee-label {
-            font-size: 1rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .info-box {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 2rem;
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 2rem;
         }
 
-        .info-box h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
+        .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .text-line {
+            font-size: 1.3rem;
+            line-height: 2;
             margin-bottom: 1rem;
-            color: #2a2a2a;
+            min-height: 2.6rem;
         }
 
-        .info-box p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #4a4a4a;
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.3rem;
+            background: #000000;
+            animation: blink 0.7s infinite;
+            margin-left: 2px;
+            vertical-align: text-bottom;
         }
 
-        .distribution-grid {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
-        .distribution-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-        }
-
-        .distribution-item .percent {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2a2a2a;
-            margin-bottom: 0.5rem;
-        }
-
-        .distribution-item .label {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .timer {
-            text-align: center;
-            padding: 1.5rem;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-
-        .timer-label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-
-        .countdown {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2a2a2a;
-            font-family: 'Courier New', monospace;
-        }
-
-        .transactions-section {
-            margin-top: 3rem;
-        }
-
-        .transactions-section h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #2a2a2a;
-        }
-
-        .transactions-table {
-            width: 100%;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .transactions-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .transactions-table th {
-            background: #fafafa;
-            padding: 1rem;
+        .docs-section {
+            display: none;
             text-align: left;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 1px solid #e0e0e0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+            border: 2px solid #000000;
+            border-radius: 10px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
-        .transactions-table td {
-            padding: 1rem;
-            font-size: 0.9rem;
-            color: #2a2a2a;
-            border-bottom: 1px solid #f0f0f0;
+        .docs-section.active {
+            display: block;
         }
 
-        .transactions-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .empty-state {
-            padding: 3rem;
+        .docs-section h2 {
+            color: #000000;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
             text-align: center;
-            color: #999;
+        }
+
+        .docs-section h3 {
+            color: #000000;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 0.5rem;
+        }
+
+        .docs-section p {
+            color: #333333;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .docs-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .docs-section li {
+            color: #333333;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .docs-section a {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            padding: 1.5rem;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+        }
+
+        .feature-card h4 {
+            color: #000000;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #666666;
             font-size: 0.9rem;
         }
 
-        .tx-hash {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-        }
-
-        .tx-amount {
-            font-weight: 600;
+        .back-btn {
+            margin-top: 2rem;
+            text-align: center;
         }
 
         @media (max-width: 768px) {
-            .header {
-                padding: 1.5rem;
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
             }
 
-            .container {
-                padding: 2rem 1rem;
+            .logo {
+                width: 60px;
+                height: 60px;
             }
 
-            .fee-amount {
-                font-size: 3rem;
+            .text-line {
+                font-size: 1rem;
+                line-height: 1.8;
             }
 
-            .distribution-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
+            .button-container {
+                flex-direction: column;
             }
+
+            .button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Scrollbar styling for docs */
+        .docs-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .docs-section::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        .docs-section::-webkit-scrollbar-thumb {
+            background: #000;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            🍌 Banana Supply
+    <div class="container" id="home-section">
+        <div class="title-container">
+            <img src="king.jpg" alt="XChan Logo" class="logo" id="logo">
+            <h1 id="title"></h1>
         </div>
-        <a href="https://x.com/BananaDotSupply" target="_blank" rel="noopener noreferrer" class="x-button">
-            <svg viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-            </svg>
-        </a>
-    </header>
-
-    <div class="container">
-        <div class="fee-display">
-            <div class="fee-amount" id="feeAmount">$0.00</div>
-            <div class="fee-label">Total Fees</div>
+        <div class="text-line" id="line1"></div>
+        <div class="text-line" id="line2"></div>
+        <div class="button-container">
+            <a href="https://x.com/xchanbot" target="_blank" rel="noopener noreferrer" class="button">
+                Talk to XChan
+            </a>
+            <button onclick="showDocs()" class="button" id="docsBtn">
+                Docs
+            </button>
         </div>
+    </div>
 
-        <div class="info-box">
-            <h2>Distribution</h2>
-            <p>Every 5 minutes, 80% of accumulated fees are sent to holders based on their token percentage.</p>
-        </div>
+    <div class="docs-section" id="docs-section">
+        <h2>📚 XChan Documentation</h2>
+        
+        <h3>Overview</h3>
+        <p>XChan is an innovative AI integration platform that combines the capabilities of multiple leading AI models—Grok, ChatGPT, and Claude—into a single, unified conversational interface accessible through X (formerly Twitter). Inspired by the groundbreaking Truth Terminal project, XChan represents the next evolution in accessible, powerful AI interaction.</p>
+        
+        <p>This documentation provides a comprehensive guide to understanding, using, and maximizing the potential of XChan. Whether you're a casual user looking to enhance your social media experience or a developer interested in the technical architecture, this guide covers everything you need to know.</p>
 
-        <div class="distribution-grid">
-            <div class="distribution-item">
-                <div class="percent">80%</div>
-                <div class="label">Holders</div>
+        <h3>What is XChan?</h3>
+        <p>XChan is a sophisticated AI bot that aggregates responses from three of the world's most advanced language models, providing users with diverse perspectives and comprehensive answers to their queries. By leveraging the unique strengths of each model, XChan delivers more balanced, nuanced, and informative responses than any single AI could provide alone.</p>
+        
+        <p>The platform operates on the principle of AI ensemble learning, where multiple models contribute to decision-making and response generation. This approach significantly reduces individual model biases and limitations while amplifying their collective intelligence. XChan processes queries in real-time, distributing them to all three AI models simultaneously and synthesizing their outputs into coherent, comprehensive responses.</p>
+        
+        <p>Unlike traditional single-model chatbots, XChan provides users with multi-faceted insights that capture different analytical approaches, creative perspectives, and reasoning methodologies. This makes it particularly valuable for complex queries that benefit from diverse viewpoints.</p>
+
+        <h3>Key Features</h3>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🤖 Multi-Model Integration</h4>
+                <p>Access Grok, ChatGPT, and Claude simultaneously for comprehensive AI assistance across all domains</p>
+            </div>
+            <div class="feature-card">
+                <h4>💬 X Platform Native</h4>
+                <p>Interact directly through X with mentions and DMs - no external apps or websites required</p>
+            </div>
+            <div class="feature-card">
+                <h4>⚡ Real-Time Responses</h4>
+                <p>Get instant answers from all three AI models processed and delivered in seconds</p>
+            </div>
+            <div class="feature-card">
+                <h4>🔓 Open Conversation</h4>
+                <p>Engage in unrestricted dialogue with uncensored model versions for authentic interactions</p>
+            </div>
+            <div class="feature-card">
+                <h4>🧠 Context Awareness</h4>
+                <p>XChan maintains conversation history within threads for coherent multi-turn dialogues</p>
+            </div>
+            <div class="feature-card">
+                <h4>🎯 Intelligent Routing</h4>
+                <p>Queries are analyzed and optimally distributed across models based on their strengths</p>
             </div>
         </div>
 
-        <div class="timer">
-            <div class="timer-label">Next distribution</div>
-            <div class="countdown" id="countdown">04:59</div>
-        </div>
+        <h3>How to Use XChan</h3>
+        <p><strong>Getting Started:</strong></p>
+        <ul>
+            <li>Follow <a href="https://x.com/xchanbot" target="_blank">@xchanbot</a> on X to stay updated with the bot's status and announcements</li>
+            <li>Mention @xchanbot in your tweets to get public responses that others can view and learn from</li>
+            <li>Send direct messages for private conversations that remain confidential</li>
+            <li>Use clear, specific questions for the best results - ambiguous queries may yield less focused responses</li>
+            <li>Experiment with different query formats to discover what works best for your needs</li>
+        </ul>
+        
+        <p><strong>Advanced Usage Tips:</strong></p>
+        <ul>
+            <li>For technical questions, specify the programming language or framework you're working with</li>
+            <li>When seeking creative content, provide context about tone, style, and target audience</li>
+            <li>For research queries, mention if you need academic sources or practical applications</li>
+            <li>Use follow-up questions to dive deeper into specific aspects of previous responses</li>
+            <li>Tag multiple topics in complex queries to get comprehensive multi-angle analysis</li>
+        </ul>
 
-        <div class="transactions-section">
-            <h2>Recent Distributions</h2>
-            <div class="transactions-table">
-                <table id="transactionsTable">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>Transaction</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="transactionsBody">
-                        <tr>
-                            <td colspan="3" class="empty-state">No distributions yet. First distribution in <span id="emptyTimer">04:59</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <h3>Interaction Methods</h3>
+        <p><strong>Public Mentions:</strong> Reply to any tweet or create a new tweet mentioning @xchanbot with your question. XChan will respond publicly, allowing others to benefit from the conversation. This method is ideal for questions that might help the broader community, such as technical tutorials, general knowledge queries, or creative brainstorming. Public interactions also contribute to the community knowledge base and help other users discover XChan's capabilities.</p>
+        
+        <p>Example public mention: "@xchanbot Can you explain the difference between machine learning and deep learning with practical examples?"</p>
+        
+        <p><strong>Direct Messages:</strong> For private queries, send a DM to @xchanbot. Your conversation will remain confidential between you and the bot. This is perfect for personal questions, sensitive topics, or when you prefer privacy. DMs are processed with the same multi-model approach as public mentions but without the visibility constraints.</p>
+        
+        <p>Example DM: "Help me draft a professional email to negotiate a job offer"</p>
+
+        <p><strong>Thread Conversations:</strong> XChan maintains context within Twitter threads, allowing for multi-turn conversations that build upon previous exchanges. When you reply to XChan's response in a thread, it remembers the conversation history and provides contextually relevant follow-ups. This enables complex problem-solving sessions, iterative refinement of ideas, and deep-dive discussions on topics.</p>
+        
+        <p>Thread conversations are particularly powerful for: debugging code with multiple iterations, developing creative projects through feedback loops, exploring complex topics step-by-step, and collaborative problem-solving where each response builds on the previous one.</p>
+
+        <h3>Technical Architecture</h3>
+        <p>XChan operates on a sophisticated backend infrastructure designed for high availability, low latency, and intelligent query processing. The architecture consists of several key components:</p>
+        
+        <p><strong>Query Processing Pipeline:</strong></p>
+        <ul>
+            <li><strong>Input Handler:</strong> Monitors X platform for mentions and DMs, parsing user queries and extracting intent</li>
+            <li><strong>Context Manager:</strong> Retrieves conversation history for thread-based interactions</li>
+            <li><strong>Query Analyzer:</strong> Uses NLP to categorize queries by type (factual, creative, technical, etc.)</li>
+            <li><strong>Intelligent Router:</strong> Determines optimal model allocation based on query characteristics</li>
+            <li><strong>Parallel Dispatcher:</strong> Sends requests to Grok, ChatGPT, and Claude APIs simultaneously</li>
+        </ul>
+        
+        <p><strong>Response Synthesis:</strong></p>
+        <ul>
+            <li><strong>Response Collector:</strong> Aggregates outputs from all three models as they complete</li>
+            <li><strong>Consensus Engine:</strong> Identifies common themes and unique insights across responses</li>
+            <li><strong>Synthesis Algorithm:</strong> Combines model outputs using weighted averaging and selective merging</li>
+            <li><strong>Quality Validator:</strong> Checks for coherence, accuracy, and completeness</li>
+            <li><strong>Format Optimizer:</strong> Adapts output for X's character limits and formatting constraints</li>
+        </ul>
+        
+        <p><strong>Infrastructure Components:</strong></p>
+        <ul>
+            <li>Cloud-based microservices architecture for scalability and fault tolerance</li>
+            <li>Redis caching layer for frequently asked questions and conversation history</li>
+            <li>PostgreSQL database for persistent storage of user preferences and analytics</li>
+            <li>Load balancers to distribute traffic across multiple API endpoint instances</li>
+            <li>Real-time monitoring and alerting systems for performance optimization</li>
+            <li>Automated failover mechanisms to ensure continuous service availability</li>
+        </ul>
+
+        <h3>The Models Behind XChan</h3>
+        
+        <p><strong>Grok (by xAI):</strong> X's native AI model, developed by xAI, is known for its real-time information access and deep understanding of current events. Grok excels at providing up-to-date information and has a unique perspective shaped by X platform data. Its training incorporates real-time social media signals, making it particularly adept at understanding trending topics, cultural references, and contemporary discussions.</p>
+        
+        <p>Grok's strengths include: real-time news analysis, social media trend interpretation, pop culture references, current event contextualization, and dynamic information retrieval. XChan leverages Grok primarily for queries requiring the most current information or social context.</p>
+
+        <p><strong>ChatGPT (by OpenAI):</strong> OpenAI's flagship conversational AI, renowned for its natural language understanding, creative capabilities, and broad knowledge base. ChatGPT brings strong reasoning and explanation abilities to the mix, with particular expertise in educational content, creative writing, and problem-solving across diverse domains.</p>
+        
+        <p>ChatGPT excels at: code generation and debugging, creative writing and storytelling, educational explanations, conversational fluency, multi-step reasoning, and adaptive communication styles. XChan utilizes ChatGPT for queries requiring creative thinking, detailed explanations, or step-by-step problem-solving.</p>
+
+        <p><strong>Claude (by Anthropic):</strong> Anthropic's advanced AI assistant, distinguished by its nuanced understanding, ethical reasoning, and ability to handle complex analytical tasks. Claude contributes depth and thoughtfulness to responses, with particular strengths in long-form content, careful analysis, and maintaining consistent reasoning across extended conversations.</p>
+        
+        <p>Claude's specialties include: detailed analysis and research, ethical reasoning and nuanced perspectives, long-form content generation, careful fact-checking, technical documentation, and maintaining coherent extended dialogues. XChan leverages Claude for queries requiring depth, precision, or careful consideration of multiple factors.</p>
+
+        <h3>Inspiration: Truth Terminal</h3>
+        <p>XChan draws profound inspiration from the Truth Terminal project, which demonstrated the potential of AI systems to engage in autonomous, creative, and meaningful interactions on social media platforms. Truth Terminal pioneered the concept of AI agents operating independently in social spaces, creating content, engaging with users, and developing a unique digital presence.</p>
+        
+        <p>The Truth Terminal experiment revealed several key insights that shaped XChan's development: AI can maintain coherent long-term presences on social platforms, multi-model approaches yield richer outputs than single-model systems, uncensored AI interactions enable more authentic and valuable conversations, and social media provides an ideal environment for accessible AI interaction.</p>
+        
+        <p>Like Truth Terminal, XChan seeks to push the boundaries of AI-human interaction while maintaining accessibility through familiar social platforms. However, XChan extends the concept by integrating multiple AI models, providing users with ensemble intelligence rather than a single perspective. This multi-model approach represents an evolution of the Truth Terminal philosophy, combining accessibility with comprehensiveness.</p>
+
+        <h3>Use Cases</h3>
+        <ul>
+            <li><strong>Research & Learning:</strong> Get multiple perspectives on complex topics, from scientific concepts to historical events. XChan's multi-model approach provides comprehensive explanations that capture different teaching styles and analytical frameworks, making it ideal for students, educators, and lifelong learners.</li>
+            
+            <li><strong>Creative Projects:</strong> Brainstorm ideas with diverse AI viewpoints for writing, design, music, or any creative endeavor. Each model contributes unique creative angles, helping you explore possibilities you might not have considered. Perfect for writers facing creative blocks, designers seeking inspiration, or artists exploring new directions.</li>
+            
+            <li><strong>Problem Solving:</strong> Tackle challenges with comprehensive AI assistance that examines problems from multiple angles. Whether debugging code, resolving business challenges, or navigating personal decisions, XChan's multi-model approach reveals solutions that might be missed by single-perspective analysis.</li>
+            
+            <li><strong>Decision Making:</strong> Evaluate options from different analytical angles with pros, cons, and considerations from multiple AI perspectives. XChan helps you make more informed choices by presenting diverse viewpoints and highlighting factors you might overlook.</li>
+            
+            <li><strong>Content Creation:</strong> Generate and refine content with multi-model input for blogs, social media, marketing copy, or any written material. Each model contributes stylistic variations and content angles, helping you craft more engaging and effective communication.</li>
+            
+            <li><strong>Technical Support:</strong> Get coding help and technical explanations with multiple approaches to solving programming challenges. Whether you're learning a new language, debugging complex systems, or architecting solutions, XChan provides diverse technical perspectives.</li>
+            
+            <li><strong>Business Strategy:</strong> Analyze market trends, competitive landscapes, and strategic decisions with multi-faceted AI insights. XChan helps entrepreneurs and business professionals explore opportunities and risks from various angles.</li>
+            
+            <li><strong>Personal Development:</strong> Receive coaching and advice on career growth, skill development, and personal goals from multiple AI perspectives, each offering unique frameworks and actionable strategies.</li>
+        </ul>
+
+        <h3>Best Practices</h3>
+        <ul>
+            <li><strong>Be Specific:</strong> Provide clear context and specific parameters for your queries. Instead of "help me with code," try "help me write a Python function that sorts a list of dictionaries by a specific key value."</li>
+            
+            <li><strong>Break Down Complexity:</strong> For complex questions, break them into smaller, manageable parts. This allows each model to focus on specific aspects and provide more targeted insights.</li>
+            
+            <li><strong>Leverage Threads:</strong> Use follow-up questions to dive deeper into topics. XChan's context awareness in threads enables progressive refinement and exploration.</li>
+            
+            <li><strong>Specify Format:</strong> If you need responses in a particular format (code, list, essay, etc.), mention it explicitly. This helps XChan tailor its output to your exact needs.</li>
+            
+            <li><strong>Compare Perspectives:</strong> When dealing with subjective topics, explicitly ask for multiple viewpoints to leverage XChan's multi-model strength.</li>
+            
+            <li><strong>Iterate and Refine:</strong> Don't hesitate to ask for revisions or alternative approaches. XChan excels at iterative refinement through thread conversations.</li>
+            
+            <li><strong>Provide Examples:</strong> When seeking specific types of content or solutions, providing examples helps XChan understand your expectations better.</li>
+            
+            <li><strong>State Constraints:</strong> Mention any limitations, requirements, or constraints upfront (word count, technical limitations, audience level, etc.).</li>
+        </ul>
+
+        <h3>Response Quality & Synthesis</h3>
+        <p>XChan's responses benefit from the combined strengths of three leading AI models through sophisticated synthesis algorithms. The platform doesn't simply concatenate outputs—it intelligently merges insights to create responses that are greater than the sum of their parts.</p>
+        
+        <p><strong>Synthesis Methodology:</strong></p>
+        <ul>
+            <li><strong>Consensus Building:</strong> Identifies areas where all models agree, presenting these as high-confidence facts or recommendations</li>
+            <li><strong>Diversity Highlighting:</strong> Surfaces unique insights from individual models that add value through alternative perspectives</li>
+            <li><strong>Conflict Resolution:</strong> When models disagree, XChan presents multiple viewpoints with context about why differences exist</li>
+            <li><strong>Quality Weighting:</strong> Dynamically adjusts model contribution based on query type and historical performance patterns</li>
+            <li><strong>Coherence Optimization:</strong> Ensures synthesized responses flow naturally and maintain logical consistency</li>
+        </ul>
+        
+        <p>This approach helps minimize individual model biases while maximizing the breadth and depth of information provided. Users benefit from more balanced, comprehensive, and reliable responses that capture the nuances of complex topics.</p>
+
+        <h3>Privacy & Data Handling</h3>
+        <p>XChan processes conversations through secure channels with strong privacy protections. Understanding how your data is handled is important for informed usage.</p>
+        
+        <p><strong>Data Processing:</strong></p>
+        <ul>
+            <li>Public interactions via mentions are visible on the X platform according to standard X privacy settings</li>
+            <li>Direct messages remain private between you and the bot, encrypted in transit</li>
+            <li>Conversation context is temporarily stored to maintain thread coherence but not permanently logged</li>
+            <li>User queries are anonymized when sent to AI model APIs</li>
+            <li>No personal identifying information is shared with third-party AI providers</li>
+        </ul>
+        
+        <p><strong>Best Practices for Privacy:</strong></p>
+        <ul>
+            <li>Avoid sharing sensitive personal information like passwords, financial details, or private addresses</li>
+            <li>Use DMs for queries containing personal context rather than public mentions</li>
+            <li>Remember that public mentions are permanently visible on the X platform</li>
+            <li>Review X's privacy settings to control who can see your public interactions</li>
+        </ul>
+
+        <h3>Limitations & Considerations</h3>
+        <p>While XChan provides powerful AI assistance, users should be aware of important limitations:</p>
+        <ul>
+            <li><strong>AI-Generated Content:</strong> Responses are generated by AI and should be verified for critical decisions. XChan provides information and perspectives, not professional advice in specialized fields like medicine or law.</li>
+            
+            <li><strong>Knowledge Cutoff:</strong> While Grok provides real-time information, ChatGPT and Claude have knowledge cutoff dates. For very recent events, some models may have limitations.</li>
+            
+            <li><strong>Data Privacy:</strong> The bot cannot access your personal data, private messages with others, or information not shared in your query. It operates only on information you explicitly provide.</li>
+            
+            <li><strong>Response Times:</strong> May vary based on platform traffic, API availability, and query complexity. Most responses arrive within seconds, but occasionally delays can occur.</li>
+            
+            <li><strong>Character Limits:</strong> X's character limits may require responses to be condensed or split into threads. Complex answers might need multiple tweets to fully address.</li>
+            
+            <li><strong>API Dependencies:</strong> XChan's functionality depends on the availability of external AI model APIs. Service interruptions to Grok, ChatGPT, or Claude can affect response quality or availability.</li>
+            
+            <li><strong>Language Support:</strong> While all models support multiple languages, English typically yields the best results due to training data distributions.</li>
+        </ul>
+
+        <h3>Future Development Roadmap</h3>
+        <p>XChan is continuously evolving with planned enhancements including:</p>
+        <ul>
+            <li><strong>Image Analysis:</strong> Integration with vision models to analyze and discuss images shared in conversations</li>
+            <li><strong>Extended Memory:</strong> Long-term conversation memory across sessions for personalized interactions</li>
+            <li><strong>Custom Preferences:</strong> User-configurable settings for response style, length, and model weighting</li>
+            <li><strong>Additional Models:</strong> Integration with emerging AI models as they become available</li>
+            <li><strong>Multi-Language Enhancement:</strong> Improved support for non-English languages with specialized models</li>
+            <li><strong>Voice Integration:</strong> Potential voice interaction capabilities through X Spaces or similar features</li>
+            <li><strong>Analytics Dashboard:</strong> User insights into their interaction patterns and most helpful responses</li>
+            <li><strong>Collaborative Features:</strong> Group conversation modes where multiple users can interact with XChan together</li>
+            <li><strong>Plugin System:</strong> Extensibility through third-party plugins for specialized domains</li>
+        </ul>
+
+        <h3>Community & Support</h3>
+        <p>Join the growing XChan community on X by following @xchanbot and engaging with other users. The community provides valuable opportunities to learn from others' queries, discover creative use cases, and share feedback that shapes future development.</p>
+        
+        <p><strong>Getting Support:</strong></p>
+        <ul>
+            <li>For technical issues, mention @xchanbot with details about the problem</li>
+            <li>For feature suggestions, share your ideas publicly or via DM</li>
+            <li>Browse existing conversations to see how others use XChan effectively</li>
+            <li>Participate in community discussions about AI capabilities and limitations</li>
+        </ul>
+        
+        <p><strong>Contributing to the Community:</strong></p>
+        <ul>
+            <li>Share interesting XChan interactions that might help others</li>
+            <li>Document creative use cases and best practices you discover</li>
+            <li>Provide constructive feedback on response quality</li>
+            <li>Help new users understand how to get the most from XChan</li>
+        </ul>
+
+        <h3>Frequently Asked Questions</h3>
+        <p><strong>Q: How does XChan differ from using each AI model separately?</strong><br>
+        A: XChan provides synthesized responses that leverage the strengths of all three models simultaneously. You get diverse perspectives and more comprehensive answers without needing to query each model individually and compare their outputs yourself.</p>
+        
+        <p><strong>Q: Is there a cost to use XChan?</strong><br>
+        A: XChan is free to use through X interactions. Just follow @xchanbot and start conversing.</p>
+        
+        <p><strong>Q: Can XChan remember previous conversations?</strong><br>
+        A: XChan maintains context within individual threads but doesn't currently remember conversations across separate threads or sessions. Future updates will include extended memory capabilities.</p>
+        
+        <p><strong>Q: What happens if one of the AI models is unavailable?</strong><br>
+        A: XChan has fallback mechanisms. If one model is temporarily unavailable, responses are generated from the available models with a note about partial synthesis.</p>
+        
+        <p><strong>Q: Can I control which models respond to my queries?</strong><br>
+        A: Currently, all three models process every query. Future versions will include preference settings for model weighting and selection.</p>
+
+        <h3>Technical Specifications</h3>
+        <p><strong>Performance Metrics:</strong></p>
+        <ul>
+            <li>Average Response Time: 2-5 seconds for standard queries</li>
+            <li>Concurrent User Capacity: Designed to handle thousands of simultaneous conversations</li>
+            <li>Uptime Target: 99.5% availability</li>
+            <li>Context Window: Maintains up to 20 previous messages in thread conversations</li>
+        </ul>
+        
+        <p><strong>API Integration Details:</strong></p>
+        <ul>
+            <li>Grok API: Real-time access with streaming responses</li>
+            <li>ChatGPT API: GPT-4 class models with extended context</li>
+            <li>Claude API: Latest Anthropic models with enhanced reasoning</li>
+            <li>Response Caching: Intelligent caching for common queries to improve speed</li>
+        </ul>
+
+        <h3>Getting the Most from XChan</h3>
+        <p>To maximize your XChan experience:</p>
+        <ul>
+            <li>Experiment with different question formats to discover what yields the best results for various query types</li>
+            <li>Compare how the integrated response addresses multiple aspects of your query that single models might miss</li>
+            <li>Use XChan for tasks that genuinely benefit from diverse perspectives rather than simple factual lookups</li>
+            <li>Engage regularly to develop intuition about how to phrase queries for optimal results</li>
+            <li>Share interesting interactions to help others learn effective usage patterns</li>
+            <li>Provide feedback on response quality to help improve the synthesis algorithms</li>
+            <li>Explore edge cases and creative applications to push the boundaries of what's possible</li>
+        </ul>
+
+        <h3>Ethical Considerations</h3>
+        <p>XChan is designed with ethical AI principles in mind:</p>
+        <ul>
+            <li><strong>Transparency:</strong> Users are always aware they're interacting with AI, not humans</li>
+            <li><strong>Balanced Perspectives:</strong> Multi-model approach reduces individual model biases</li>
+            <li><strong>User Autonomy:</strong> XChan provides information and perspectives but respects user decision-making</li>
+            <li><strong>Privacy Protection:</strong> Strong data handling practices protect user information</li>
+            <li><strong>Responsible AI:</strong> Continuous monitoring for harmful outputs or misuse patterns</li>
+        </ul>
+
+        <h3>Troubleshooting</h3>
+        <p><strong>Common Issues and Solutions:</strong></p>
+        <ul>
+            <li><strong>No Response:</strong> Ensure you've correctly mentioned @xchanbot and check if the bot is currently online</li>
+            <li><strong>Slow Responses:</strong> High traffic periods may cause delays; patience typically resolves this</li>
+            <li><strong>Incomplete Answers:</strong> Try rephrasing your question more specifically or breaking it into parts</li>
+            <li><strong>Context Loss:</strong> Make sure you're replying within the same thread to maintain conversation history</li>
+            <li><strong>Format Issues:</strong> Specify your desired response format explicitly in the query</li>
+        </ul>
+
+        <div class="back-btn">
+            <button onclick="showHome()" class="button">← Back to Home</button>
         </div>
     </div>
 
     <script>
-        let currentFee = parseFloat(localStorage.getItem('banana_fee') || '0');
-        let seconds = 299;
-        let transactions = JSON.parse(localStorage.getItem('banana_txs') || '[]');
-        let hasDistributed = false;
+        const texts = {
+            title: "XCHAN",
+            line1: "We put uncensored versions of Grok, ChatGPT and Claude into 1 X account inspired by Truth Terminal",
+            line2: "> _"
+        };
 
-        function generateTxHash() {
-            const chars = '0123456789abcdef';
-            let hash = '';
-            for (let i = 0; i < 64; i++) {
-                hash += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return hash;
-        }
-
-        function formatTime() {
-            const now = new Date();
-            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function addTransaction() {
-            const amount = (currentFee * 0.8).toFixed(2);
-            const tx = {
-                time: formatTime(),
-                hash: generateTxHash(),
-                amount: amount
-            };
+        function typeWriter(elementId, text, speed, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
             
-            transactions.unshift(tx);
-            if (transactions.length > 10) transactions = transactions.slice(0, 10);
-            localStorage.setItem('banana_txs', JSON.stringify(transactions));
-            updateTransactionsTable();
-        }
-
-        function updateTransactionsTable() {
-            const tbody = document.getElementById('transactionsBody');
-            
-            if (transactions.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="3" class="empty-state">No distributions yet. First distribution in <span id="emptyTimer"></span></td></tr>';
-                updateEmptyTimer();
-            } else {
-                tbody.innerHTML = transactions.map(tx => `
-                    <tr>
-                        <td>${tx.time}</td>
-                        <td class="tx-hash">${tx.hash.substring(0, 8)}...${tx.hash.substring(56)}</td>
-                        <td class="tx-amount">$${tx.amount}</td>
-                    </tr>
-                `).join('');
-            }
-        }
-
-        function updateEmptyTimer() {
-            const emptyTimer = document.getElementById('emptyTimer');
-            if (emptyTimer) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                emptyTimer.textContent = mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
-            }
-        }
-
-        function updateDisplay() {
-            document.getElementById('feeAmount').textContent = '$' + currentFee.toFixed(2);
-        }
-
-        function updateFee() {
-            currentFee += Math.random() * 1.5 + 0.05;
-            localStorage.setItem('banana_fee', currentFee);
-            updateDisplay();
-        }
-
-        function updateTimer() {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            document.getElementById('countdown').textContent = 
-                mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
-            
-            if (seconds === 0) {
-                seconds = 299;
-                hasDistributed = true;
-                document.getElementById('countdown').textContent = 'DISTRIBUTING';
-                addTransaction();
-                setTimeout(() => updateTimer(), 2000);
-            } else {
-                seconds--;
-                if (transactions.length === 0) {
-                    updateEmptyTimer();
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    setTimeout(callback, 500);
                 }
             }
+            
+            type();
         }
 
-        updateDisplay();
-        updateTransactionsTable();
-        setInterval(updateFee, 5000);
-        setInterval(updateTimer, 1000);
+        function startTyping() {
+            typeWriter('title', texts.title, 100, () => {
+                typeWriter('line1', texts.line1, 30, () => {
+                    typeWriter('line2', texts.line2, 100, () => {
+                        document.getElementById('line2').innerHTML += '<span class="cursor"></span>';
+                    });
+                });
+            });
+        }
+
+        function showDocs() {
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('docs-section').classList.add('active');
+            document.getElementById('docsBtn').style.display = 'none';
+        }
+
+        function showHome() {
+            document.getElementById('home-section').style.display = 'block';
+            document.getElementById('docs-section').classList.remove('active');
+            document.getElementById('docsBtn').style.display = 'block';
+        }
+
+        window.addEventListener('load', startTyping);
     </script>
 </body>
 </html>
